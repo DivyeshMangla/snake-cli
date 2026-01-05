@@ -12,7 +12,7 @@ typedef enum {
 
 typedef struct {
     KeyType type;
-    char ch;        // valid only if type == KEY_CHAR
+    char ch;        // valid only if type == KEY_CHAR (0 by default)
 } Key;
 
 Key read_key(void);
