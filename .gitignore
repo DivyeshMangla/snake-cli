@@ -1,0 +1,31 @@
+# Build artifacts
+*.o
+*.out
+*.exe
+a.out
+
+# Binaries
+snake
+snake.exe
+
+# Debug files
+*.log
+*.tmp
+*.swp
+*.swo
+*.dSYM/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
