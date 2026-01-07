@@ -10,6 +10,7 @@ add_executable(
         main.c
         src/key.c
         src/KeyHandler.c
+        src/util/Matrix.c
 )
 
 target_include_directories(

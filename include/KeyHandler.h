@@ -2,7 +2,7 @@
 #define KEYHANDLER_H
 #include "Key.h"
 
-void handle_key(Key key);
+void handleKey(Key key);
 
 // Special func keys
 void handleQuitKey();
