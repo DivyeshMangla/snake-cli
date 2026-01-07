@@ -5,10 +5,10 @@
 
 static bool running = true;
 
-void handle_input(void) {
-    const Key key = read_key();
+void handleInput(void) {
+    const Key key = readKey();
 
-    printf("Pressed Key = %s\n", key_type_to_string(key.type));
+    printf("Pressed Key = %s\n", keyTypeToStr(key.type));
 
     if (key.type == KEY_CHAR && key.ch == 'q') {
         running = false;   // quit on 'q'
@@ -25,7 +25,7 @@ void render(void) {
 
 int main(void) {
     while (running) {
-        handle_input();
+        handleInput();
         update();
         render();
     }

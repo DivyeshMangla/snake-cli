@@ -3,7 +3,7 @@
 #ifdef _WIN32
 #include <conio.h>
 
-Key read_key(void) {
+Key readKey(void) {
     Key k = { KEY_NONE, 0 };
     int ch = _getch();
 
@@ -73,7 +73,7 @@ Key read_key(void) {
 }
 #endif
 
-const char *key_type_to_string(const KeyType type) {
+const char *keyTypeToStr(const KeyType type) {
     switch (type) {
         case KEY_UP:    return "KEY_UP";
         case KEY_DOWN:  return "KEY_DOWN";

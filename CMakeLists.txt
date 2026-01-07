@@ -9,6 +9,7 @@ add_executable(
         snake_cli
         main.c
         src/key.c
+        src/KeyHandler.c
 )
 
 target_include_directories(

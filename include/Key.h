@@ -15,8 +15,8 @@ typedef struct {
     char ch;        // valid only if type == KEY_CHAR (0 by default)
 } Key;
 
-Key read_key(void);
+Key readKey(void);
 
-const char *key_type_to_string(KeyType type);
+const char *keyTypeToStr(KeyType type);
 
 #endif
