@@ -1,34 +1,17 @@
-#include <stdbool.h>
-#include <stdio.h>
+#include "game/Game.h"
+#include <stdlib.h>
 
-#include "Key.h"
-
-static bool running = true;
-
-void handleInput(void) {
-    const Key key = readKey();
-
-    printf("Pressed Key = %s\n", keyTypeToStr(key.type));
-
-    if (key.type == KEY_CHAR && key.ch == 'q') {
-        running = false;   // quit on 'q'
-    }
-}
-
-void update(void) {
-    // do nothing atm
-}
-
-void render(void) {
-    // do nothing atm
-}
+#define GAME_WIDTH 30
+#define GAME_HEIGHT 15
 
 int main(void) {
-    while (running) {
-        handleInput();
-        update();
-        render();
+    Game *game = createGame(GAME_WIDTH, GAME_HEIGHT);
+    if (!game) {
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    runGame(game);
+    freeGame(game);
+
+    return EXIT_SUCCESS;
 }
