@@ -8,7 +8,6 @@ add_executable(
         snake_cli
         main.c
         src/Key.c
-        src/KeyHandler.c
         src/Terminal.c
         src/util/Matrix.c
         src/game/Snake.c
