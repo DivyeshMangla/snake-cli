@@ -25,32 +25,31 @@ Key readKey(void) {
 }
 
 #else
-// POSIX (Linux / macOS)
 #include <unistd.h>
 #include <termios.h>
 
-static void set_raw_mode(int enable) {
-    static struct termios old;
-    struct termios new;
+static void setRawMode(int enable) {
+    static struct termios original;
+    struct termios raw;
 
     if (enable) {
-        tcgetattr(STDIN_FILENO, &old);
-        new = old;
-        new.c_lflag &= ~(ICANON | ECHO);
-        tcsetattr(STDIN_FILENO, TCSANOW, &new);
+        tcgetattr(STDIN_FILENO, &original);
+        raw = original;
+        raw.c_lflag &= ~(ICANON | ECHO);
+        tcsetattr(STDIN_FILENO, TCSANOW, &raw);
     } else {
-        tcsetattr(STDIN_FILENO, TCSANOW, &old);
+        tcsetattr(STDIN_FILENO, TCSANOW, &original);
     }
 }
 
-Key read_key(void) {
+Key readKey(void) {
     Key k = { KEY_NONE, 0 };
     char c;
 
-    set_raw_mode(1);
+    setRawMode(1);
     read(STDIN_FILENO, &c, 1);
 
-    if (c == 27) { // ESC
+    if (c == 27) {
         char seq[2];
         read(STDIN_FILENO, &seq[0], 1);
         read(STDIN_FILENO, &seq[1], 1);
@@ -61,6 +60,7 @@ Key read_key(void) {
                 case 'B': k.type = KEY_DOWN;  break;
                 case 'C': k.type = KEY_RIGHT; break;
                 case 'D': k.type = KEY_LEFT;  break;
+                default: break;
             }
         }
     } else {
@@ -68,7 +68,7 @@ Key read_key(void) {
         k.ch = c;
     }
 
-    set_raw_mode(0);
+    setRawMode(0);
     return k;
 }
 #endif
