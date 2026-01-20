@@ -12,6 +12,12 @@ void initTerminal(void) {
     hConsole = GetStdHandle(STD_INPUT_HANDLE);
     GetConsoleMode(hConsole, &originalMode);
     SetConsoleMode(hConsole, originalMode & ~(ENABLE_LINE_INPUT | ENABLE_ECHO_INPUT));
+
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD outMode;
+    GetConsoleMode(hOut, &outMode);
+    SetConsoleMode(hOut, outMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+
     hideCursor();
 }
 
@@ -128,3 +134,28 @@ void sleepMs(int milliseconds) {
 }
 
 #endif
+
+static const char *getColorCode(TermColor color) {
+    switch (color) {
+        case COLOR_RED:          return "\033[31m";
+        case COLOR_GREEN:        return "\033[32m";
+        case COLOR_YELLOW:       return "\033[33m";
+        case COLOR_BLUE:         return "\033[34m";
+        case COLOR_MAGENTA:      return "\033[35m";
+        case COLOR_CYAN:         return "\033[36m";
+        case COLOR_WHITE:        return "\033[37m";
+        case COLOR_BRIGHT_GREEN: return "\033[92m";
+        case COLOR_BRIGHT_YELLOW:return "\033[93m";
+        case COLOR_BRIGHT_RED:   return "\033[91m";
+        case COLOR_GRAY:         return "\033[90m";
+        default:                 return "\033[0m";
+    }
+}
+
+void setColor(TermColor color) {
+    printf("%s", getColorCode(color));
+}
+
+void resetColor(void) {
+    printf("\033[0m");
+}

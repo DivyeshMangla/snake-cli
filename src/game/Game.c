@@ -140,6 +140,7 @@ void updateGame(Game *game) {
 static void renderBorder(const Game *game) {
     int totalWidth = game->width + 2;
 
+    setColor(COLOR_CYAN);
     moveCursor(0, 0);
     for (int i = 0; i < totalWidth; i++) {
         putchar(BORDER_CHAR);
@@ -156,6 +157,7 @@ static void renderBorder(const Game *game) {
     for (int i = 0; i < totalWidth; i++) {
         putchar(BORDER_CHAR);
     }
+    resetColor();
 }
 
 static void renderPlayfield(const Game *game) {
@@ -171,31 +173,43 @@ static void renderSnake(const Game *game) {
     for (int i = 0; i < game->snake->length; i++) {
         Point p = game->snake->body[i];
         moveCursor(p.y + 1, p.x + 1);
+        setColor(i == 0 ? COLOR_BRIGHT_GREEN : COLOR_GREEN);
         putchar(i == 0 ? SNAKE_HEAD : SNAKE_BODY);
     }
+    resetColor();
 }
 
 static void renderFood(const Game *game) {
     moveCursor(game->food.y + 1, game->food.x + 1);
+    setColor(COLOR_BRIGHT_RED);
     putchar(FOOD_CHAR);
+    resetColor();
 }
 
 static void renderStatus(const Game *game) {
     moveCursor(game->height + 2, 0);
-    printf("Score: %-6d Speed: %d/%d  ", game->score, game->speed, SPEED_MAX);
+    setColor(COLOR_BRIGHT_YELLOW);
+    printf("Score: %-6d", game->score);
+    setColor(COLOR_CYAN);
+    printf(" Speed: %d/%d  ", game->speed, SPEED_MAX);
+    resetColor();
 
     moveCursor(game->height + 3, 0);
     switch (game->state) {
         case STATE_PAUSED:
+            setColor(COLOR_YELLOW);
             printf("[PAUSED] Press P to resume                    ");
             break;
         case STATE_GAME_OVER:
+            setColor(COLOR_BRIGHT_RED);
             printf("[GAME OVER] Press R to restart, Q to quit     ");
             break;
         default:
+            setColor(COLOR_GRAY);
             printf("WASD/Arrows: move | +/-: speed | P: pause | Q: quit");
             break;
     }
+    resetColor();
 }
 
 void renderGame(const Game *game) {
