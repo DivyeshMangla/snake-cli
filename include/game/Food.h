@@ -11,4 +11,3 @@ typedef struct {
 Food spawnFood(int width, int height, const Snake *snake);
 
 #endif
-

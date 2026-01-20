@@ -34,4 +34,3 @@ bool snakeCollidesWithSelf(const Snake *snake);
 bool snakeOccupies(const Snake *snake, int x, int y);
 
 #endif
-

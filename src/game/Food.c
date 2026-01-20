@@ -22,4 +22,3 @@ Food spawnFood(int width, int height, const Snake *snake) {
 
     return food;
 }
-

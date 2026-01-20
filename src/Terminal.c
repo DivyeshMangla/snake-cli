@@ -24,7 +24,8 @@ void restoreTerminal(void) {
 void clearScreen(void) {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO csbi;
-    DWORD count, cellCount;
+    DWORD count;
+    DWORD cellCount;
     COORD homeCoords = { 0, 0 };
 
     if (GetConsoleScreenBufferInfo(hOut, &csbi)) {
@@ -127,4 +128,3 @@ void sleepMs(int milliseconds) {
 }
 
 #endif
-

@@ -210,4 +210,3 @@ void runGame(Game *game) {
 
     restoreTerminal();
 }
-

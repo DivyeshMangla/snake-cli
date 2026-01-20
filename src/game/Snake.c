@@ -95,4 +95,3 @@ bool snakeOccupies(const Snake *snake, int x, int y) {
     }
     return false;
 }
-

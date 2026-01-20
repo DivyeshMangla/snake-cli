@@ -31,4 +31,3 @@ void renderGame(const Game *game);
 void runGame(Game *game);
 
 #endif
-
