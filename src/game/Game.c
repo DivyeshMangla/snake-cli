@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define GAME_TICK_MS 100
+#define BASE_TICK_MS 200
+#define TICK_REDUCTION_PER_SPEED 15
 #define BORDER_CHAR '#'
 #define SNAKE_HEAD '@'
 #define SNAKE_BODY 'o'
@@ -18,6 +19,7 @@ Game *createGame(int width, int height) {
     game->width = width;
     game->height = height;
     game->score = 0;
+    game->speed = SPEED_DEFAULT;
     game->state = STATE_RUNNING;
     game->tickCount = 0;
 
@@ -87,6 +89,14 @@ void handleGameInput(Game *game) {
             case 'd':
             case 'D':
                 setSnakeDirection(game->snake, DIR_RIGHT);
+                break;
+            case '+':
+            case '=':
+                if (game->speed < SPEED_MAX) game->speed++;
+                break;
+            case '-':
+            case '_':
+                if (game->speed > SPEED_MIN) game->speed--;
                 break;
         }
     } else {
@@ -172,18 +182,18 @@ static void renderFood(const Game *game) {
 
 static void renderStatus(const Game *game) {
     moveCursor(game->height + 2, 0);
-    printf("Score: %d", game->score);
+    printf("Score: %-6d Speed: %d/%d  ", game->score, game->speed, SPEED_MAX);
 
     moveCursor(game->height + 3, 0);
     switch (game->state) {
         case STATE_PAUSED:
-            printf("[PAUSED] Press P to resume");
+            printf("[PAUSED] Press P to resume                    ");
             break;
         case STATE_GAME_OVER:
-            printf("[GAME OVER] Press R to restart, Q to quit");
+            printf("[GAME OVER] Press R to restart, Q to quit     ");
             break;
         default:
-            printf("Arrow keys/WASD: move | P: pause | Q: quit");
+            printf("WASD/Arrows: move | +/-: speed | P: pause | Q: quit");
             break;
     }
 }
@@ -197,6 +207,10 @@ void renderGame(const Game *game) {
     fflush(stdout);
 }
 
+static int getTickDelay(int speed) {
+    return BASE_TICK_MS - (speed * TICK_REDUCTION_PER_SPEED);
+}
+
 void runGame(Game *game) {
     initTerminal();
     clearScreen();
@@ -205,7 +219,7 @@ void runGame(Game *game) {
         handleGameInput(game);
         updateGame(game);
         renderGame(game);
-        sleepMs(GAME_TICK_MS);
+        sleepMs(getTickDelay(game->speed));
     }
 
     restoreTerminal();

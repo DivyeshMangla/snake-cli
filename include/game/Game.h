@@ -18,9 +18,14 @@ typedef struct {
     int width;
     int height;
     int score;
+    int speed;
     GameState state;
     unsigned long tickCount;
 } Game;
+
+#define SPEED_MIN 1
+#define SPEED_MAX 10
+#define SPEED_DEFAULT 5
 
 Game *createGame(int width, int height);
 void freeGame(Game *game);
